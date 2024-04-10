@@ -4,15 +4,17 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class ProductsService extends PrismaClient implements OnModuleInit{
-  
+export class ProductsService extends PrismaClient implements OnModuleInit {
+
   private readonly logger = new Logger(ProductsService.name);
   onModuleInit() {
     this.$connect();
     this.logger.log('Connected to the database');
   }
   create(createProductDto: CreateProductDto) {
-    return createProductDto;
+    return this.product.create({
+      data: createProductDto
+    });
   }
 
   findAll() {
